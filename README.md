@@ -14,21 +14,26 @@ Parse input (ensure it's correct, then convert it to usable stuff), take a .txt 
 - starting word (set of bits)
 
 How stuff works:
-class logic gate -> all logic gates have only 2 entry points, more entry points = compound gate?,
-                    or do some magic math to make them work for infinite gates like, multiplication for AND gate
-                    also contain logic gates leading into them
+class logic gate -> - type of gate as str, np. "OR", "AND"
+                    - entry points of gate, which can be other gates, flip-flops, or bools
+                    - property value -> returns the caluculated value based on type of gate
 class flip-flop -> contains:
-                    - logic gate entering it (there can only be one, defaults to or with logic gate/previous
-                    - exit value?
-                    - id (number in output)
+                    - logic-gate/flip-flip/bool entering it as input value (bool only for testing purposes)
+                    - property value -> updates_value, returns the value of thing on input
+                    - property id -> returns id <mark>this could be useless</mark>
                     - ???
+class register -> contains:
+                    - length = number of flip-flops in it
+                    - table of flip-flop objects of "length" length
+                    - .values() method, which returns the values of all flip-flops
+                    - .value() methos, which returns the value of a single flip-flop
 
 Output:
 stopień wykorzystania przestrzeni (szereg N przerzutników hipotetycznie daje 2^N kombinacji a ile zostało wygenerowanych)
 różnorodność ciągu - średnia liczba bitów różniących się pomiędzy wyrazami ciągu.
 created words of n length
 
-Possible issues:
+Possible bugs:
 when doing "until loop" can enter a loop which doesn't return you to starting value
                     
 ## Authors and acknowledgment
@@ -37,6 +42,7 @@ Aleksander Nowak, and i would like to thank:
 - myself
 - I
 for all of their hard work.
+And Mateusz Guliński, for his mental support through these trying times.
 
 ## Project status
 In development.
