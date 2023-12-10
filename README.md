@@ -14,22 +14,30 @@ Parse input (ensure it's correct, then convert it to usable stuff), take a .txt 
 - starting word (set of bits)
 
 How stuff works:
-class logic gate -> - type of gate as str, np. "OR", "AND"
-                    - entry points of gate, which can be other gates, flip-flops, or bools
-                    - property value -> returns the caluculated value based on type of gate
-class flip-flop -> contains:
-                    - logic-gate/flip-flip/bool entering it as input value (bool only for testing purposes)
-                    - property value -> updates_value, returns the value of thing on input
-                    - property id -> returns id <mark>this could be useless</mark>
-                    - ???
-class register -> contains:
-                    - length = number of flip-flops in it
-                    - table of flip-flop objects of "length" length
-                    - .values() method, which returns the values of all flip-flops
-                    - .value() methos, which returns the value of a single flip-flop
+
+Class logic gate -> contains:
+- type of gate as str, np. "OR", "AND"
+
+- entry points of gate, which can be other gates, flip-flops, or bools
+- property value -> returns the caluculated value based on type of gate
+
+Class flip-flop -> contains:
+- logic-gate/flip-flip/bool entering it as input value (bool only for testing purposes)
+- property value -> updates_value, returns the value of thing on input
+- property id -> returns id <mark>this could be useless</mark>
+- ???
+
+Class register -> contains:
+- length = number of flip-flops in it
+- table of flip-flop objects of "length" length
+- .values() method, which returns the values of all flip-flops
+- .value() methos, which returns the value of a single flip-flop
 
 Output:
-stopień wykorzystania przestrzeni (szereg N przerzutników hipotetycznie daje 2^N kombinacji a ile zostało wygenerowanych)
+
+stopień wykorzystania przestrzeni
+(szereg N przerzutników hipotetycznie daje 2^N kombinacji a ile zostało wygenerowanych)
+
 różnorodność ciągu - średnia liczba bitów różniących się pomiędzy wyrazami ciągu.
 created words of n length
 
