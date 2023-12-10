@@ -1,5 +1,6 @@
 from flip_flop import FlipFlop
-from logic_gate import LogicGate
+
+# from logic_gate import LogicGate
 
 
 def test_set_id():
