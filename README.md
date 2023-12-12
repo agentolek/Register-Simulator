@@ -42,7 +42,8 @@ Aleksander Nowak, and i would like to thank:
 - myself
 - I
 for all of their hard work.
-And Mateusz Guliński, for his mental support through these trying times.
+
+And not Mateusz Guliński, for his mental support through these trying times.
 
 ## Project status
 In development.
