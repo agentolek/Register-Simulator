@@ -17,15 +17,23 @@ def test_create_flip_flop():
     assert flipflop.id == "1"
 
 
-def test_update_value():
-    flipflop = FlipFlop("1", False, True)
-    assert flipflop.value
-    flipflop.update_value()
-    assert not flipflop.value
+# outdated, flipflop now automatically updates value
+# whenever it's value is called.
+
+# def test_update_value():
+#     flipflop = FlipFlop("1", False, True)
+#     assert flipflop.value
+#     flipflop.update_value()
+#     assert not flipflop.value
 
 
 def test_load_value():
     flipflop = FlipFlop("1", True, True)
     assert flipflop.value
     flipflop.load_value(False)
+    assert not flipflop.value
+
+
+def test_value_auto_update():
+    flipflop = FlipFlop("1", False, True)
     assert not flipflop.value

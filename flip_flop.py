@@ -26,6 +26,7 @@ class FlipFlop:
 
     @id.setter
     def id(self, new_id) -> None:
+        # TODO: check if id isn't a repeat or throw it out entirely
         if not new_id:
             raise ValueError
         self._id = new_id
@@ -36,6 +37,7 @@ class FlipFlop:
         Whenever you get the value, the update_value method is called to make
         sure returned value is up to date.
         """
+        self.update_value()
         return self._value
 
     def load_value(self, value) -> None:
@@ -53,4 +55,4 @@ class FlipFlop:
         if isinstance(self._entry, bool):
             self.load_value(self._entry)
         else:
-            self.value = self._entry.value
+            self._value = self._entry.value
