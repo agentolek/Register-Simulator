@@ -1,0 +1,27 @@
+{
+    "1": {
+        "starting-value": true,
+        "gate": {
+            "type": "AND",
+            "flip-flops": [3, 2]
+        }
+    },
+    "2": {
+        "starting-value": false
+    },
+    "3": {
+        "starting-value": true,
+        "gate": {
+            "type": "OR",
+            "flip-flops": [3],
+            "gate": {
+                "type": "NOT",
+                "flip-flops": [2]
+            },
+            "gate2": {
+                "type": "NOT",
+                "flip-flops": [1]
+            }
+        }
+    }
+}

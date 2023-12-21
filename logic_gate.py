@@ -18,7 +18,8 @@ class LogicGate:
     AVAILABLE_TYPES = ["AND", "OR", "NOT"]
 
     def __init__(self, entries, type) -> None:
-        if not entries
+        if not entries:
+            raise EntryAmountError
         self._entries = entries
         if type.upper() not in self.AVAILABLE_TYPES:
             raise NotAvailableTypeError
@@ -43,7 +44,7 @@ class LogicGate:
 
     def and_value(self):
         """
-        Entries - unlimited.
+        Entries - 1 to infinity.
         Returns True if all "subvalues" of LogicGate are True,
         otherwise returns False.
         """
@@ -54,7 +55,7 @@ class LogicGate:
 
     def or_value(self):
         """
-        Entries - unlimited.
+        Entries - 1 to infinity.
         Returns True if at least one subvalue of LogicGate is True,
         returns False only if all subvalues are False.
         """
