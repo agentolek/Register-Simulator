@@ -93,6 +93,8 @@ def create_register(data):
 
         counter += 1
 
+    return Register(flip_flops)
+
 
 def parse_data(path):
     data = None
