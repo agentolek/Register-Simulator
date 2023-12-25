@@ -34,11 +34,13 @@ class FlipFlop:
     @property
     def value(self) -> bool:
         """
-        Whenever you get the value, the update_value method is called to make
-        sure returned value is up to date.
+        Get the current value of flip-flop.
         """
-        self.update_value()
         return self._value
+
+    def updated_value(self):
+        self.update_value()
+        return self.value
 
     def load_value(self, value) -> None:
         """
@@ -56,3 +58,10 @@ class FlipFlop:
             self.load_value(self._entry)
         else:
             self._value = self._entry.value
+
+    def set_entry(self, new_entry) -> None:
+        """
+        Used during creation of register to set it up. Changes initial entry
+        from bool to LogicGate / previous FlipFlop.
+        """
+        self._entry = new_entry

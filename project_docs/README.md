@@ -29,11 +29,11 @@ They can also contain the following elements:
 If "gate" element is not provided, then the flip-flops entry defaults to the previous flip-flop.
 
 "gate" must contain:
-- "type": "AND"/"OR"/"NOT"/... -> the type of the gate
+- "type": for example "AND"/"OR"/"NOT"/... -> the type of the gate
 The below elements are entries, each gate must contain at least 1:
 - "flip-flops": [1, 2, 3] -> list of flip-flops which enter the gate
 - "gate": {dict with gate stuff} -> gate entering the gate as input.
-- "gate2", "gate3", etc... -> if more then one gate enters the flip-flop, name them like this in the json file.
+- "gate2", "gate3", etc... -> if more then one gate enters the current gate, name them like this in the json file. Maximum of 5 gates can be nested in one gate, so goes up to gate5.
 
 Requirements:
 - At least one flip-flop must be in the dict.
@@ -58,8 +58,9 @@ Class FlipFlop -> contains:
 Class Register -> contains:
 - length = number of flip-flops in it
 - flip-flops = table of flip-flop objects of "length" length
-- .values() method, which returns he values of all flip-flops
+- .values() method, which returns the values of all flip-flops
 - .value(index) method, which returns the value of a single flip-flop
+- .update(values<list[bool]>) method, which updates the values of each flip-flop in the register to match the ones given as argmuent
 
 Output:
 

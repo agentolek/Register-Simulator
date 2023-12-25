@@ -1,0 +1,4 @@
+Dlaczego nie Enum zamiast booli jako stan wysoki/niski?
+
+Ponieważ na boolach można wykonywać operacje arytmetyczne.
+Korzystam z tego gdy zwracam wartości logiczne bramek.
