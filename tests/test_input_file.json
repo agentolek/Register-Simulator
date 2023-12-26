@@ -3,7 +3,7 @@
         "starting-value": true,
         "gate": {
             "type": "AND",
-            "flip-flops": [3, 2]
+            "flip-flops": [2, 3]
         }
     },
     "2": {
