@@ -7,6 +7,7 @@ from register import Register
 MAXIMUM_NESTED_GATES: int = 5
 
 
+# TODO: make error give information about where in the file the error occured
 class IncompleteJsonError(Exception):
     def __init__(self, *args: object) -> None:
         super().__init__("The json file is missing something!")
@@ -45,7 +46,10 @@ def create_logic_gate(logic_gate: dict, flip_flops: list):
 
     if "flip-flops" in logic_gate:
         flip_flops_entering += logic_gate["flip-flops"]
-        entries += [flip_flops[id - 1] for id in logic_gate["flip-flops"]]
+        try:
+            entries += [flip_flops[id - 1] for id in logic_gate["flip-flops"]]
+        except IndexError:
+            raise IncompleteJsonError(logic_gate)
 
     if "gate" in logic_gate:
         gate_result = create_logic_gate(logic_gate.get("gate"), flip_flops)
@@ -102,8 +106,9 @@ def parse_data(path):
     with open(path, "r") as f:
         data = read_from_json(f)
 
-    register = create_register(data)
+    register: Register = create_register(data)
 
+    print(register.flip_flops[0])
     return data
 
 
