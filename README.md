@@ -56,7 +56,7 @@ Class FlipFlop -> contains:
 - .load_value() method -> loads new value into flip-flop, regardless of what input is.
 
 Class Register -> contains:
-- length = number of flip-flops in it
+- __len__ = number of flip-flops in it
 - flip-flops = table of flip-flop objects of "length" length
 - .values() method, which returns the values of all flip-flops
 - .value(index) method, which returns the value of a single flip-flop

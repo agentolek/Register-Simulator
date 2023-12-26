@@ -57,7 +57,7 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, depth=0):
 
     # limits the level of nesting a gate can have
     if depth >= 3:
-        raise MaximumDepthError()
+        raise MaximumDepthError(logic_gate)
 
     # check for mandatory keys in dict
     if "type" not in logic_gate or (
@@ -85,7 +85,7 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, depth=0):
         else:
             break
 
-    return LogicGate(entries, logic_gate["type"]), flip_flops_entering
+    return LogicGate(entries, logic_gate["type"]), set(flip_flops_entering)
 
 
 def create_register(data):
