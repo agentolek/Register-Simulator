@@ -39,8 +39,7 @@ class FlipFlop:
         return self._value
 
     def updated_value(self):
-        self.update_value()
-        return self.value
+        return self._entry.value
 
     def load_value(self, value) -> None:
         """

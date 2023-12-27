@@ -1,6 +1,7 @@
 import argparse
 import sys
 from parse_data import parse_data
+from register import Register
 
 
 def parse_terminal_input(arguments):
@@ -16,9 +17,23 @@ def parse_terminal_input(arguments):
     return parser.parse_args(arguments[1:])
 
 
+def run_until_loop(register: Register):
+    created_sequences = []
+    while True:
+        current_values = register.values
+        if current_values in created_sequences:
+            break
+        created_sequences.append(current_values)
+        # TODO: resume working here
+
+
 def main(arguments):
     args = parse_terminal_input(arguments)
-    print(args)
+
+    register = parse_data(args.json_path)
+
+    if args.until_loop:
+        run_until_loop(register)
 
 
 if __name__ == "__main__":
