@@ -13,8 +13,10 @@ Need to give:
 - path of .json file containing register config stuff
 - path to file te program will write its output to
 And one of the below (or maybe just disregard the first one if loop flag is given, need to read docs):
-- number of new sequences to be generated
-- optional flag --until-loop -> the program will work until it creates an already acquired sequence
+Either one of the below flags must be present:
+- --until-loop -> the program will work until it creates an already acquired sequence
+- --steps :int: -> the program will generate a certain number of sequences.
+
 
 #### What does the input json need to look like?
 
@@ -59,7 +61,7 @@ Class Register -> contains:
 - __len__ = number of flip-flops in it
 - flip-flops = table of flip-flop objects of "length" length
 - .values() method, which returns the values of all flip-flops
-- .value(index) method, which returns the value of a single flip-flop
+- .value_of_index(index) method, which returns the value of a single flip-flop
 - .update(values<list[bool]>) method, which updates the values of each flip-flop in the register to match the ones given as argmuent
 
 Output:
