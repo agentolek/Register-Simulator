@@ -12,18 +12,23 @@ class Register:
         """
         return [flip_flop.value for flip_flop in self.flip_flops]
 
+    def updated_values(self):
+        """
+        Returns the values of entries of each register.
+        """
+        return [flip_flop.updated_value for flip_flop in self.flip_flops]
+
     def value_of_index(self, index):
         """
         Returns the value of a single flip-flop in register.
         """
         return self.flip_flops[index]
 
-    def update(self, new_values):
+    def update(self):
         """
-        Updates the values in register to the ones provided in new_values.
+        Updates the values in register to match the current values on entries.
         """
-        if len(new_values) != len(self):
-            raise ValueError
-
+        new_values = [flip_flop.updated_value() for flip_flop in self.flip_flops]
+        pass
         for i in range(len(new_values)):
             self.flip_flops[i].load_value(new_values[i])

@@ -2,3 +2,11 @@ Dlaczego nie Enum zamiast booli jako stan wysoki/niski?
 
 Ponieważ na boolach można wykonywać operacje arytmetyczne.
 Korzystam z tego gdy zwracam wartości logiczne bramek.
+
+
+Dlaczego flaga --until-loop istnieje? Nie można po prostu dać opcjonalnej flagi --steps,
+i jak nie jest podana odpalić tryb --until-loop?
+
+W teorii tak, ale jeżeli użytkownik ma długi ciąg rejestrów i chce dostać pierwszych parę sekwencji,
+to może przez przypadek kliknąć enter zmuszać komputer to przetwarzania ogromnej ilości danych.
+Dodanie flagi --steps eliminuje ten problem.
