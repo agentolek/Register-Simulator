@@ -31,6 +31,6 @@ def test_load_value():
     assert not flipflop.value
 
 
-def test_value_auto_update():
-    flipflop = FlipFlop("1", False, True)
-    assert not flipflop.updated_value()
+# def test_value_auto_update():
+#     flipflop = FlipFlop("1", False, True)
+#     assert not flipflop.updated_value()

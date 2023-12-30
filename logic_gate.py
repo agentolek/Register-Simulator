@@ -10,18 +10,8 @@ class EntryAmountError(Exception):
         )
 
 
-# TODO: remove redundant checks throughout class,
-#       which have been since added to __init__
 class LogicGate:
-    """
-    List of currently available types.
-    """
-
-    AVAILABLE_TYPES = ["AND", "OR", "NOT"]
-
-    # GATE_TYPES = Enum(
-    #     "AND" : lambda x:
-    # )
+    # list of currently available LogicGate types.
 
     def __init__(self, entries, type) -> None:
         if not entries:
@@ -35,16 +25,7 @@ class LogicGate:
 
     @property
     def value(self):
-        match self._type:
-            case "AND":
-                return self.and_value()
-            case "OR":
-                return self.or_value()
-            case "NOT":
-                return self.not_value()
-            # add value funcs for new LogicGate types here.
-            case _:
-                raise NotAvailableTypeError
+        return self.AVAILABLE_TYPES.get(self._type)(self)
 
     def and_value(self):
         """
@@ -73,7 +54,8 @@ class LogicGate:
         Entries - only 1.
         Returns the opposite value of entry.
         """
-        if len(self._entries) != 1:
-            raise EntryAmountError
-
         return not self._entries[0].value
+
+    # dict of currently available types. Each type has its "value method"
+    # given as value.
+    AVAILABLE_TYPES = {"AND": and_value, "OR": or_value, "NOT": not_value}

@@ -26,7 +26,6 @@ class FlipFlop:
 
     @id.setter
     def id(self, new_id) -> None:
-        # TODO: check if id isn't a repeat or throw it out entirely
         if not new_id:
             raise ValueError
         self._id = new_id
