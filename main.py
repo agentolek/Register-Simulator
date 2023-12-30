@@ -30,12 +30,11 @@ def visualise_sequence(sequence, seq_number):
     """
     Prints the generated sequence in terminal.
     """
-
     # Program only visualises the first 9999 sequences.
     if seq_number > 9999:
         return
 
-    print_string = str(seq_number) + ". "
+    print_string = str(seq_number - 1) + ". "
     print_string = print_string.zfill(6)
     for elem in sequence:
         if elem:
@@ -55,7 +54,7 @@ def run_for_steps(register: Register, steps: int):
     """
     created_sequences = []
 
-    for _ in range(steps):
+    for _ in range(steps + 1):
         current_values = register.values()
         created_sequences.append(current_values)
         visualise_sequence(current_values, len(created_sequences))
@@ -86,9 +85,41 @@ def run_until_loop(register: Register):
     return created_sequences
 
 
-def write_to_file(write_file_path, sequences):
+def calc_utilization_rate(created_sequences, register):
+    """
+    Calculates the percentage of available sequences that were created
+    using program.
+    """
+    return round(len(set(created_sequences)) / (2 ** len(register)), 4)
+
+
+def calc_avg_bit_difference(created_sequences, register):
+    """
+    Calculates the average difference between sequences created using program.
+    """
+    bits_differing = []
+    for i in range(1, len(created_sequences)):
+        prev_sequence = created_sequences[i - 1]
+        curr_sequence = created_sequences[i]
+        diff_counter = 0
+        for c in range(len(register)):
+            diff_counter = (
+                diff_counter + 1
+                if prev_sequence[c] == curr_sequence[c]
+                else diff_counter
+            )
+        bits_differing.append(diff_counter)
+
+    return round((sum(bits_differing) / len(bits_differing)), 2)
+
+
+def write_to_file(write_file_path, sequences, utilization_rate, avg_diff):
     try:
         with open(write_file_path, "w") as f:
+            f.write(
+                f"Percentage of possible seqences created: {utilization_rate*100}%\n"
+            )
+            f.write(f"Average number of bits changed between sequences: {avg_diff}\n")
             for sequence in sequences:
                 write_string = "".join(["1" if value else "0" for value in sequence])
                 f.write(f"{write_string}\n")
@@ -103,16 +134,23 @@ def main(arguments):
     register = parse_data(args.json_path)
 
     if args.steps is not None:
-        args.steps = int(args.steps)
-        if args.steps <= 0:
-            raise StepError
+        try:
+            args.steps = int(args.steps)
+            if args.steps <= 0:
+                raise StepError
+        except ValueError:
+            print("ValueError: Steps requires its argument to be an integer!")
+            quit()
 
     if args.until_loop:
         created_sequences = run_until_loop(register)
     else:
         created_sequences = run_for_steps(register, args.steps)
 
-    write_to_file(args.destination_path, created_sequences)
+    util_rate = calc_utilization_rate(created_sequences, register)
+    avg_diff = calc_avg_bit_difference(created_sequences, register)
+
+    write_to_file(args.destination_path, created_sequences, util_rate, avg_diff)
 
 
 if __name__ == "__main__":

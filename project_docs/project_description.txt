@@ -3,13 +3,13 @@ Informacje
 Prowadzący:
 Rajmund Piotr Kożuszek
 
-Zrealizować program pozwalający użytkownikowi na symulację rejestru zbudowanego z 
+Zrealizować program pozwalający użytkownikowi na symulację rejestru zbudowanego z
 dowolnej liczby przerzutników połączonych ze sobą.
 
-Wejściem do przerzutnika może być dowolnie wiele wyjść innych przerzutników, 
+Wejściem do przerzutnika może być dowolnie wiele wyjść innych przerzutników,
 poddanych wybranej operacji logicznej (XOR/AND/NOR etc).
 
-Wyjście N-tego przerzutnika jest zawsze jednym z wejść przerzutnika N+1. 
+Wyjście N-tego przerzutnika jest zawsze jednym z wejść przerzutnika N+1.
 Wyjście ostatniego jest zawsze wejściem (jednym z) pierwszego.
 
 W ten sposób powstaje generator ciągów bitów.
@@ -21,7 +21,7 @@ Program powinien móc zapisywać wygenerowane ciągi.
 Program powinien mieć tryb pracy "aż się zapętli", czyli aż wróci do stanu początkowego.
 
 Uzyskane ciągi powinny być oceniane:
-stopień wykorzystania przestrzeni 
+stopień wykorzystania przestrzeni
 (szereg N przerzutników hipotetycznie daje 2^N kombinacji a ile zostało wygenerowanych)
 różnorodność ciągu - średnia liczba bitów różniących się pomiędzy wyrazami ciągu.
 Ze względu na złożoność kombinatoryczną należy w testach podchodzić ostrożnie do liczby przerzutników

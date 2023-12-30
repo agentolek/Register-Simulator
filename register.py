@@ -10,7 +10,7 @@ class Register:
         Returns a list of bools, which contain the current values of
         FlipFlops in register.
         """
-        return [flip_flop.value for flip_flop in self.flip_flops]
+        return tuple([flip_flop.value for flip_flop in self.flip_flops])
 
     def updated_values(self):
         """
