@@ -157,23 +157,3 @@ def test_create_register_random_json():
     )
     with raises(parse_data.IncompleteJsonError):
         parse_data.parse_data(fake_json)
-
-
-def test_create_register_previous_rule_failed():
-    fake_json = io.StringIO(
-        """
-        {"menu": {
-                    "id": "file",
-                    "value": "File",
-                    "popup": {
-                        "menuitem": [
-                        {"value": "New", "onclick": "CreateNewDoc()"},
-                        {"value": "Open", "onclick": "OpenDoc()"},
-                        {"value": "Close", "onclick": "CloseDoc()"}
-                        ]
-                    }
-                    }}
-        """
-    )
-    with raises(parse_data.IncompleteJsonError):
-        parse_data.parse_data(fake_json)

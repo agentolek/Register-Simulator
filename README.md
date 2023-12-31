@@ -3,6 +3,11 @@
 ## Description
 A model of a register created using type D flip-flops, made in Python.
 
+<b>The available types of gates are:</b>
+- NOT
+- AND
+- OR
+
 ## How it works:
 
 Activate program using terminal.

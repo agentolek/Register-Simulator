@@ -28,7 +28,7 @@ Ze względu na złożoność kombinatoryczną należy w testach podchodzić ostr
 (wolne obliczenia).
 
 
-copy pasted markdown
+copy pasted markdown, very outdated!!!!
 
 ### Classes
 

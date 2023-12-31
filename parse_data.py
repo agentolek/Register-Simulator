@@ -1,6 +1,6 @@
 import json
 from flip_flop import FlipFlop
-from logic_gate import LogicGate, EntryAmountError
+from logic_gate import LogicGate
 from register import Register
 
 
@@ -65,7 +65,7 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, depth=0):
     if "type" not in logic_gate or (
         not ("flip-flops" in logic_gate or "gate" in logic_gate)
     ):
-        raise IncompleteJsonError(logic_gate)
+        raise IncompleteJsonError("This logic gate is missing an entry: ", logic_gate)
 
     # adds flip-flops to entry list
     if "flip-flops" in logic_gate:
@@ -73,7 +73,9 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, depth=0):
         try:
             entries += [flip_flops[id - 1] for id in logic_gate["flip-flops"]]
         except IndexError:
-            raise IncompleteJsonError(logic_gate)
+            raise IncompleteJsonError(
+                "FlipFlop number is out of range in gate: ", logic_gate
+            )
 
     # creates nested gates and adds them to entries,
     # also adds its entries to entry list
@@ -119,7 +121,10 @@ def create_register(data):
                     gate_result[0],
                 )
             elif counter != 0 and counter not in gate_result[1]:
-                raise IncompleteJsonError(gate_result[0])
+                raise IncompleteJsonError(
+                    f"Previous flip_flop does not enter flip_flop named {id}",
+                    gate_result[0],
+                )
 
             flip_flops[counter].set_entry(gate_result[0])
         else:
