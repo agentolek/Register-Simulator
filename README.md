@@ -14,7 +14,6 @@ Either one of the below flags must be present:
 - --until-loop -> the program will work until it creates an already generated sequence
 - --steps :int: -> the program will generate a certain number of sequences.
 
-
 ### What does the input json need to look like?
 
 An example input file has been included in the repo, named "test_input_file.json."
@@ -43,7 +42,7 @@ Requirements:
 
 ## Output:
 
-The program will print the first 9999 sequences created. What's more, it will create a .txt file.
+The program will print the first 9999 sequences created. What's more, it will create a .txt file containing the resulsts of its hard labor.
 
 Its top 2 lines will be occupied by statistics regarding your created sequences: the percentage of available unique sequences created, and the average number of bits changed between each cycle.
 
