@@ -15,10 +15,10 @@ class LogicGate:
             raise EntryAmountError("No entries were given!")
         self._entries = entries
         if type.upper() not in self.AVAILABLE_TYPES:
-            raise NotAvailableTypeError(entries)
+            raise NotAvailableTypeError
         self._type = type
         if self._type == "NOT" and len(entries) != 1:
-            raise EntryAmountError("NOT gate accepts only one entry!", entries)
+            raise EntryAmountError("NOT gate accepts only one entry!")
 
     @property
     def value(self):

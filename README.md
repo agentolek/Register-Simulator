@@ -4,9 +4,11 @@
 A model of a register created using type D flip-flops, made in Python.
 
 <b>The available types of gates are:</b>
-- NOT
-- AND
-- OR
+- NOT - max 1 entry
+- AND - unlimited entries
+- OR - unlimited entries
+- NAND - unlimited entries
+- NOR - unlimited entries
 
 ## How it works:
 
