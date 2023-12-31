@@ -2,6 +2,7 @@ import parse_data
 from flip_flop import FlipFlop
 from pytest import raises
 from logic_gate import EntryAmountError, NotAvailableTypeError
+import io
 
 
 # --- tests for create_logic_gate ---
@@ -25,7 +26,7 @@ def test_create_logic_gate_no_entries():
     ]
     gate_dict = {"type": "AND", "flip-flops": []}
     with raises(EntryAmountError):
-        logic_gate, entries = parse_data.create_logic_gate(gate_dict, flip_flops)
+        parse_data.create_logic_gate(gate_dict, flip_flops)
 
 
 def test_create_logic_gate_wrong_entry_type():
@@ -35,7 +36,7 @@ def test_create_logic_gate_wrong_entry_type():
     ]
     gate_dict = {"type": "AND", "flip-flops": "test_string"}
     with raises(TypeError):
-        logic_gate, entries = parse_data.create_logic_gate(gate_dict, flip_flops)
+        parse_data.create_logic_gate(gate_dict, flip_flops)
 
 
 def test_create_logic_gate_type_not_supported():
@@ -45,7 +46,7 @@ def test_create_logic_gate_type_not_supported():
     ]
     gate_dict = {"type": "NONE", "flip-flops": [1]}
     with raises(NotAvailableTypeError):
-        logic_gate, entries = parse_data.create_logic_gate(gate_dict, flip_flops)
+        parse_data.create_logic_gate(gate_dict, flip_flops)
 
 
 def test_create_logic_gate_nested():
@@ -78,7 +79,7 @@ def test_create_logic_gate_nested_over_limit():
         },
     }
     with raises(parse_data.MaximumDepthError):
-        logic_gate, entries = parse_data.create_logic_gate(gate_dict, flip_flops)
+        parse_data.create_logic_gate(gate_dict, flip_flops)
 
 
 def test_create_logic_gate_missing_type():
@@ -88,7 +89,7 @@ def test_create_logic_gate_missing_type():
     ]
     gate_dict = {"flip-flops": []}
     with raises(parse_data.IncompleteJsonError):
-        logic_gate, entries = parse_data.create_logic_gate(gate_dict, flip_flops)
+        parse_data.create_logic_gate(gate_dict, flip_flops)
 
 
 # --- tests for flip-flop ---
@@ -106,7 +107,7 @@ def test_create_flip_flop_no_starting_value():
         "smth-smth": True,
     }
     with raises(parse_data.IncompleteJsonError):
-        flip_flop = parse_data.create_flip_flop("this_is_id", flip_flop_dict)
+        parse_data.create_flip_flop("this_is_id", flip_flop_dict)
 
 
 def test_create_flip_flop_starting_value_not_bool():
@@ -114,4 +115,41 @@ def test_create_flip_flop_starting_value_not_bool():
         "starting-value": "not_a_bool",
     }
     with raises(parse_data.IncompleteJsonError):
-        flip_flop = parse_data.create_flip_flop("this_is_id", flip_flop_dict)
+        parse_data.create_flip_flop("this_is_id", flip_flop_dict)
+
+
+# --- tests for create_register ---
+def test_create_register_single_flip_flop():
+    fake_json = io.StringIO(
+        """
+        {
+            "1": {
+                "starting-value": true,
+                "gate": {
+                    "type": "NOT",
+                    "flip-flops": [1]
+                }
+            }
+        }
+        """
+    )
+    register = parse_data.parse_data(fake_json)
+    assert len(register) == 1
+    assert register.values() == [True]
+    assert register.updated_values() == [False]
+
+
+def test_create_register_random_json():
+    fake_json = io.StringIO(
+        """
+        {
+            "1": {
+                "starting-value": true,
+                "gate": {
+                    "type": "NOT",
+                    "flip-flops": [1]
+                }
+            }
+        }
+        """
+    )

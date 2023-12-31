@@ -23,57 +23,57 @@ def parse_terminal_input(arguments):
     group.add_argument("--steps")
     group.add_argument("--until-loop", action="store_true")
 
-    return parser.parse_args(arguments[1:])
+    args = parser.parse_args(arguments[1:])
+
+    # checks if steps are ok
+    if args.steps is not None:
+        try:
+            args.steps = int(args.steps)
+            if args.steps <= 0:
+                raise StepError
+        except ValueError:
+            raise ValueError("Steps argument must be an integer greater than 0!")
+
+    return args
 
 
 def visualise_sequence(sequence, seq_number):
     """
     Prints the generated sequence in terminal.
     """
-    # Program only visualises the first 9999 sequences.
-    if seq_number > 9999:
+    # Program only visualises the first 10000 sequences.
+    if seq_number > 10000:
         return
 
     print_string = str(seq_number - 1) + ". "
     print_string = print_string.zfill(6)
     for elem in sequence:
         if elem:
-            # FIXME: uses an em dash which isn't in ASCII,
-            #        so might not work everywhere
+            # uses an em dash which isn't in ASCII,
+            # so might not work everywhere
             print_string += "—"
         else:
             print_string += "_"
     print(print_string)
 
 
-# TODO: maybe refactor run_for_steps and run_until_loop into one function?
-def run_for_steps(register: Register, steps: int):
+def run_register(register: Register, steps: int = None, looped=False):
     """
-    Creates X new sequences from register, where X is the number of steps.
-    Returns the sequences created.
-    """
-    created_sequences = []
+    Runs the register, creating new sequences and returning a list of sequences
+    created.
 
-    for _ in range(steps + 1):
-        current_values = register.values()
-        created_sequences.append(current_values)
-        visualise_sequence(current_values, len(created_sequences))
-        register.update()
-
-    return created_sequences
-
-
-def run_until_loop(register: Register):
-    """
-    Creates new sequences from given register until it hits a loop.
-    Returns the sequences created.
+    If looped == True, new sequences will stop being generated once
+    a sequence is repeated.
+    If steps != None, X new sequences will be generated, with X being
+    the integer passes as steps.
     """
     created_sequences = []
+    max_counter = steps + 1 if steps else -1
 
-    while True:
-        current_values = register.values()
+    while max_counter != 0:
+        current_values = tuple(register.values())
 
-        if current_values in created_sequences:
+        if (current_values in created_sequences) and looped:
             created_sequences.append(current_values)
             visualise_sequence(current_values, len(created_sequences))
             break
@@ -81,6 +81,7 @@ def run_until_loop(register: Register):
         created_sequences.append(current_values)
         visualise_sequence(current_values, len(created_sequences))
         register.update()
+        max_counter -= 1
 
     return created_sequences
 
@@ -102,12 +103,11 @@ def calc_avg_bit_difference(created_sequences, register):
         prev_sequence = created_sequences[i - 1]
         curr_sequence = created_sequences[i]
         diff_counter = 0
+
         for c in range(len(register)):
-            diff_counter = (
-                diff_counter + 1
-                if prev_sequence[c] == curr_sequence[c]
-                else diff_counter
-            )
+            if prev_sequence[c] != curr_sequence[c]:
+                diff_counter += 1
+
         bits_differing.append(diff_counter)
 
     return round((sum(bits_differing) / len(bits_differing)), 2)
@@ -123,29 +123,26 @@ def write_to_file(write_file_path, sequences, utilization_rate, avg_diff):
             for sequence in sequences:
                 write_string = "".join(["1" if value else "0" for value in sequence])
                 f.write(f"{write_string}\n")
-    except OSError:
-        raise OSError("Something is wrong with the file path!")
+    except Exception:
+        print("Couldn't write to file, something is wrong with path given!!!")
+
+
+def get_register(path):
+    try:
+        with open(path, "r") as f:
+            return parse_data(f)
+    # TODO: catch errors like NotAFile, NoFile, etc
+    except Exception:
+        pass
 
 
 def main(arguments):
     args = parse_terminal_input(arguments)
     created_sequences = []
 
-    register = parse_data(args.json_path)
+    register = get_register(args.json_path)
 
-    if args.steps is not None:
-        try:
-            args.steps = int(args.steps)
-            if args.steps <= 0:
-                raise StepError
-        except ValueError:
-            print("ValueError: Steps requires its argument to be an integer!")
-            quit()
-
-    if args.until_loop:
-        created_sequences = run_until_loop(register)
-    else:
-        created_sequences = run_for_steps(register, args.steps)
+    created_sequences = run_register(register, args.steps, args.until_loop)
 
     util_rate = calc_utilization_rate(created_sequences, register)
     avg_diff = calc_avg_bit_difference(created_sequences, register)

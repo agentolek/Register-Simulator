@@ -125,17 +125,9 @@ def create_register(data):
     return Register(flip_flops)
 
 
-def parse_data(path):
-    data = None
-    # TODO: catch errors like NotAFile, NoFile, etc
-    with open(path, "r") as f:
-        data = read_from_json(f)
+def parse_data(file_handle):
+    data = read_from_json(file_handle)
 
     register = create_register(data)
 
     return register
-
-
-if __name__ == "__main__":
-    data = parse_data("tests/test_input_file.json")
-    pass

@@ -45,7 +45,7 @@ Requirements:
 ### Classes
 
 Class LogicGate -> contains:
-- type of gate as str, np. "OR", "AND"
+- type of gate as str, for example: "OR", "AND"
 - entry points of gate, which can be other gates or flip-flops. Each gate must have at least one entry,
 with the NOT gate also being limited to max 1 gate.
 - property value -> returns the caluculated value based on type of gate
