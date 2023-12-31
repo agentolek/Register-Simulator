@@ -131,9 +131,8 @@ def get_register(path):
     try:
         with open(path, "r") as f:
             return parse_data(f)
-    # TODO: catch errors like NotAFile, NoFile, etc
-    except Exception:
-        pass
+    except FileNotFoundError:
+        raise FileNotFoundError("Path to input json doesn't point to a file!")
 
 
 def main(arguments):

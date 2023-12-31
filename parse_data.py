@@ -8,10 +8,8 @@ MAXIMUM_GATES_IN_GATE: int = 5
 MAXIMUM_GATE_DEPTH: int = 3
 
 
-# TODO: make error give information about where in the file the error occured
 class IncompleteJsonError(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__("The json file is missing something!")
+    pass
 
 
 class MaximumDepthError(Exception):
@@ -22,13 +20,13 @@ class MaximumDepthError(Exception):
 
 
 def read_from_json(file_handle):
-    data = None
-    try:
-        data = json.load(file_handle)
-    except json.JSONDecodeError:
-        # FIXME: wrong error used
-        raise IncompleteJsonError
-    return data
+    # data = None
+    # try:
+    #     data = json.load(file_handle)
+    # except json.JSONDecodeError:
+    #     raise json.JSONDecodeError("Json provided is not formatted properly!")
+    # return data
+    return json.load(file_handle)
 
 
 def create_flip_flop(id, flip_flop):
@@ -38,9 +36,13 @@ def create_flip_flop(id, flip_flop):
     """
     starting_value = flip_flop.get("starting-value", None)
     if starting_value is None:
-        raise IncompleteJsonError(flip_flop)
+        raise IncompleteJsonError(
+            f"Your flip_flop named '{id}' is missing starting-value!"
+        )
     if not isinstance(starting_value, bool):
-        raise IncompleteJsonError(flip_flop)
+        raise IncompleteJsonError(
+            f"The starting value of your flip_flop named '{id}' is not a bool!"
+        )
 
     return FlipFlop(id, starting_value, starting_value)
 

@@ -142,14 +142,18 @@ def test_create_register_single_flip_flop():
 def test_create_register_random_json():
     fake_json = io.StringIO(
         """
-        {
-            "1": {
-                "starting-value": true,
-                "gate": {
-                    "type": "NOT",
-                    "flip-flops": [1]
-                }
-            }
-        }
+        {"menu": {
+                    "id": "file",
+                    "value": "File",
+                    "popup": {
+                        "menuitem": [
+                        {"value": "New", "onclick": "CreateNewDoc()"},
+                        {"value": "Open", "onclick": "OpenDoc()"},
+                        {"value": "Close", "onclick": "CloseDoc()"}
+                        ]
+                    }
+                    }}
         """
     )
+    with raises(parse_data.IncompleteJsonError):
+        parse_data.parse_data(fake_json)
