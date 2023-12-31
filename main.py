@@ -41,7 +41,7 @@ def visualise_sequence(sequence, seq_number):
     """
     Prints the generated sequence in terminal.
     """
-    # Program only visualises the first 10000 sequences.
+    # Program only visualises the first 9999 sequences created.
     if seq_number > 10000:
         return
 

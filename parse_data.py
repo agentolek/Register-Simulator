@@ -114,7 +114,10 @@ def create_register(data):
             # these ifs check if previous flip_flop is one of the entries for
             # current one, separate ifs for first flip-flop and all others
             if counter == 0 and len(flip_flops) not in gate_result[1]:
-                raise IncompleteJsonError(gate_result[0])
+                raise IncompleteJsonError(
+                    f"Previous flip_flop does not enter flip_flop named {id}",
+                    gate_result[0],
+                )
             elif counter != 0 and counter not in gate_result[1]:
                 raise IncompleteJsonError(gate_result[0])
 
