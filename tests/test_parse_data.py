@@ -1,7 +1,7 @@
 import parse_data
 from flip_flop import FlipFlop
 from pytest import raises
-from logic_gate import EntryAmountError, NotAvailableTypeError
+from parse_data import EntryAmountError, NotAvailableTypeError
 import io
 
 

@@ -1,6 +1,5 @@
-from logic_gate import LogicGate, NotAvailableTypeError
+from logic_gate import LogicGate
 from flip_flop import FlipFlop
-from pytest import raises
 
 
 def test_create_logic_gate_AND_true():
@@ -30,11 +29,6 @@ def test_create_logic_gate_OR_false():
     logic_gate = LogicGate([flip_flop, flip_flop], "OR")
     assert logic_gate._entries == [flip_flop, flip_flop]
     assert not logic_gate.value
-
-
-def test_create_logic_gate_wrong_type():
-    with raises(NotAvailableTypeError):
-        logic_gate = LogicGate([False, True], "NotAType")
 
 
 def test_create_nested_logic_gate():

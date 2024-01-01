@@ -1,6 +1,3 @@
-from logic_gate import LogicGate
-
-
 class FlipFlop:
     """
     Class FlipFlop. Contains values:
@@ -13,18 +10,7 @@ class FlipFlop:
 
     def __init__(self, id, entry, value) -> None:
         self._id = id
-
-        if not (
-            isinstance(entry, FlipFlop)
-            or isinstance(entry, LogicGate)
-            or isinstance(entry, bool)
-        ):
-            raise ValueError
-
         self._entry = entry
-
-        if not isinstance(value, bool):
-            raise ValueError
         self._value = value
 
     @property

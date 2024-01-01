@@ -1,21 +1,10 @@
-class NotAvailableTypeError(Exception):
-    def __init__(self, type_) -> None:
-        super().__init__(
-            f"A LogicGate in input json uses unsupported type {type_}!",
-        )
-
-
-class EntryAmountError(Exception):
-    pass
-
-
 class LogicGate:
     """
     Class LogicGate. Contains values:
     :param entries: The FlipFlops/LogicGates entering the LogicGate.
     :type entries: list[FlipFlop|LogicGate|bool]
 
-    :param type: The type of logic gate.
+    :param type: The type of logic gatde.
     :type type: str
 
     :param value: Returns the value of the LogicGate.
@@ -23,18 +12,8 @@ class LogicGate:
     """
 
     def __init__(self, entries, type_) -> None:
-        if not entries:
-            raise EntryAmountError(
-                "No entries were given in a LogicGate in input json!"
-            )
         self._entries = entries
-        if type_.upper() not in self.AVAILABLE_TYPES:
-            raise NotAvailableTypeError(type_)
         self._type = type_
-        if self._type == "NOT" and len(entries) != 1:
-            raise EntryAmountError(
-                f"NOT gate accepts only one entry! Gate currently has {len(entries)} entries"
-            )
 
     @property
     def value(self):

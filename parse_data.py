@@ -15,7 +15,21 @@ class IncompleteJsonError(Exception):
 class MaximumDepthError(Exception):
     def __init__(self, id) -> None:
         super().__init__(
-            f"Gate exceeded the maximum depth limit of {MAXIMUM_GATE_DEPTH} in flip-flop {id}"
+            f"Gate exceeded the maximum depth limit of {MAXIMUM_GATE_DEPTH} in flip-flop '{id}'!"
+        )
+
+
+class NotAvailableTypeError(Exception):
+    def __init__(self, id, type_) -> None:
+        super().__init__(
+            f"A gate in flip-flop '{id}' is using unsupported type {type_}!"
+        )
+
+
+class EntryAmountError(Exception):
+    def __init__(self, id, type_) -> None:
+        super().__init__(
+            f"A gate, type {type_}, in flip_flop '{id}' isn't using proper nr of entries!"
         )
 
 
@@ -39,7 +53,35 @@ def create_flip_flop(id: str, flip_flop: dict):
     return FlipFlop(id, starting_value, starting_value)
 
 
-def create_logic_gate(logic_gate: dict, flip_flops: list, id=None, depth=0):
+def check_gate(logic_gate: dict, entries: list, id: str, depth: int):
+    """
+    Runs tests to see if a LogicGate object can be created using given data.
+    """
+    # limits the level of nesting a gate can have
+    if depth >= 3:
+        raise MaximumDepthError(id)
+
+    # check for mandatory keys in dict
+    if "type" not in logic_gate:
+        raise IncompleteJsonError(f"A gate has no type in flip-flop '{id}'!")
+
+    if not ("flip-flops" in logic_gate or "gate" in logic_gate):
+        raise IncompleteJsonError(
+            f"A gate, type {logic_gate['type']} has no entries in flip-flop '{id}'!"
+        )
+
+    # checks if type is supported
+    if logic_gate["type"] not in LogicGate.AVAILABLE_TYPES:
+        raise NotAvailableTypeError(id, logic_gate["type"])
+
+    # checks whether number of entries is legal
+    if (logic_gate["type"] == "NOT" and len(entries) != 1) or len(entries) == 0:
+        raise EntryAmountError(id, logic_gate["type"])
+
+
+def create_logic_gate(
+    logic_gate: dict, flip_flops: list, id: str = None, depth: int = 0
+):
     """
     Given a gate dict and list of flip-flops,
     creates and returns a LogicGate object and list of flip-flops entering it.
@@ -51,24 +93,14 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, id=None, depth=0):
     flip_flops_entering = []
     entries = []
 
-    # limits the level of nesting a gate can have
-    if depth >= 3:
-        raise MaximumDepthError(id)
-
-    # check for mandatory keys in dict
-    if "type" not in logic_gate or (
-        not ("flip-flops" in logic_gate or "gate" in logic_gate)
-    ):
-        raise IncompleteJsonError(f"A logic gate has no entries in flip-flop {id}")
-
     # adds flip-flops to entry list
     if "flip-flops" in logic_gate:
         flip_flops_entering += logic_gate["flip-flops"]
         try:
             entries += [flip_flops[id - 1] for id in logic_gate["flip-flops"]]
         except IndexError:
-            raise IncompleteJsonError(
-                f"Attempted use of non-existent flip-flop in flip-flop {id}"
+            raise IndexError(
+                f"Attempted use of non-existent flip-flop in flip-flop '{id}'!"
             )
 
     # creates nested gates and adds them to entries,
@@ -82,6 +114,8 @@ def create_logic_gate(logic_gate: dict, flip_flops: list, id=None, depth=0):
             flip_flops_entering += gate_result[1]
         else:
             break
+
+    check_gate(logic_gate, entries, id, depth)
 
     return LogicGate(entries, logic_gate["type"]), set(flip_flops_entering)
 
