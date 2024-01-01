@@ -1,4 +1,10 @@
 class Register:
+    """
+    Class Register. Contains values:
+    :param flip_flops: List of flip_flops in register.
+    :type flip_flops: List[FlipFlop]
+    """
+
     def __init__(self, flip_flops) -> None:
         self.flip_flops = flip_flops
 

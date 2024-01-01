@@ -2,11 +2,18 @@ from logic_gate import LogicGate
 
 
 class FlipFlop:
-    # TODO: write nice looking doc string for flipflop class
+    """
+    Class FlipFlop. Contains values:
+    :param id: The FlipFlop's internal name.
+    :type id: str
+
+    :param value: The current value of the FlipFlop.
+    :type value: int
+    """
+
     def __init__(self, id, entry, value) -> None:
         self._id = id
 
-        # TODO: once done with rest of project, remove type checks here
         if not (
             isinstance(entry, FlipFlop)
             or isinstance(entry, LogicGate)

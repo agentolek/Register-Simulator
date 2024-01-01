@@ -14,25 +14,27 @@ def parse_terminal_input(arguments):
     Parses flags and argments typed in terminal into usable data.
     Also checks if all of the necessary arguments are there.
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="main.py")
 
-    parser.add_argument("json_path")
-    parser.add_argument("destination_path")
+    parser.add_argument("json_path", help="Path to input json.")
+    parser.add_argument("destination_path", help="Path to output txt file.")
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--steps")
-    group.add_argument("--until-loop", action="store_true")
+    group.add_argument(
+        "--steps",
+        type=int,
+        help="Specifies that the program should generate STEPS new sequences.",
+    )
+    group.add_argument(
+        "--until-loop",
+        action="store_true",
+        help="Specifies that the program should generate sequences until it creates an already acquired sequence.",
+    )
 
     args = parser.parse_args(arguments[1:])
 
-    # checks if steps are ok
-    if args.steps is not None:
-        try:
-            args.steps = int(args.steps)
-            if args.steps <= 0:
-                raise StepError
-        except ValueError:
-            raise ValueError("Steps argument must be an integer greater than 0!")
+    if args.steps <= 0:
+        raise StepError
 
     return args
 

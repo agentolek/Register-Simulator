@@ -2,7 +2,8 @@
     "1": {
         "starting-value": true,
         "gate": {
-            "type": "AND"
+            "type": "AND",
+            "flip-flops": [2, 3]
         }
     },
     "2": {
@@ -11,14 +12,14 @@
     "3": {
         "starting-value": true,
         "gate": {
-            "type": "NOR",
+            "type": "OR",
             "flip-flops": [3],
             "gate": {
-                "type": "NAND",
+                "type": "NOT",
                 "flip-flops": [2]
             },
             "gate2": {
-                "type": "AND",
+                "type": "NOT",
                 "flip-flops": [1]
             }
         }

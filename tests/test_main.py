@@ -35,15 +35,15 @@ def test_parse_terminal_input():
     assert args.steps == 12
 
 
-def test_parse_terminal_input_wrong_steps():
+def test_parse_terminal_input_negative_steps():
     test_args = [
         "/home/agentolek/rejestr-pipr-projekt/main.py",
         "./tests/test_input_file.json",
         "./tests/test_output_file.txt",
         "--steps",
-        "NotANumber",
+        "-5",
     ]
-    with raises(ValueError):
+    with raises(main.StepError):
         main.parse_terminal_input(test_args)
 
 
@@ -61,7 +61,7 @@ def test_visualise_sequence_above_10000():
     assert capturedPrint.getvalue() == ""
 
 
-def test_get_register():
+def test_run_register_typical():
     register = main.get_register("tests/test_input_file.json")
     sequences = main.run_register(register, 3)
     assert sequences == [
