@@ -1,17 +1,17 @@
-Dlaczego nie Enum zamiast booli jako stan wysoki/niski?
+1. Dlaczego nie Enum zamiast booli jako stan wysoki/niski?
 
-Ponieważ na boolach można wykonywać operacje arytmetyczne.
-Korzystam z tego gdy zwracam wartości logiczne bramek.
+Ponieważ bool ma tylko dwie wartości, ma wbudowane funkcje arytmetyczne oraz inne.
+Enum by nie pomógł, a tylko zmusił mnie do tworzenia kolejnych zmian w kodzie.
 
 
-Dlaczego flaga --until-loop istnieje? Nie można po prostu dać opcjonalnej flagi --steps,
+2. Dlaczego flaga --until-loop istnieje? Nie można po prostu dać opcjonalnej flagi --steps,
 i jak nie jest podana odpalić tryb --until-loop?
 
 W teorii tak, ale jeżeli użytkownik ma długi ciąg rejestrów i chce dostać pierwszych parę sekwencji,
 to może przez przypadek kliknąć enter zmuszać komputer to przetwarzania ogromnej ilości danych.
 Dodanie flagi --steps eliminuje ten problem.
 
-Dlaczego nie Enum na typ bramki zamiast stringa?
+3. Dlaczego nie Enum na typ bramki zamiast stringa?
 
 Tworząc Enum'a do typów bramki wpadłem na parę problemów:
 1. Muszę tak czy siak przłożyć stringa z jsona na zmienną z Enum. Mogę to zrobić albo setattr(),
@@ -19,5 +19,5 @@ albo stworzyć słownik do tego.
 2. Bardzo bym chciał aby wartością Enuma typu, np OR, była funkcja zwracająca wartość tej bramki.
 Aby to zrobić Enumem, te funkcje musiałyby się znajdować poza klasą LogicGate.
 (Można zrobić nowy plik z funkcjami od value, ale problem 1. pozostaje.)
-3. Słownik typ: funkcja jest wg mnie bardzo dobrym rozwiązaniem, i nie wymaga zmieniania takiej ilości
+3. Słownik typ: funkcja jest wg mnie bardzo dobrym rozwiązaniem, i nie wymagało zmieniania takiej ilości
 kodu co zastosowanie Enuma.

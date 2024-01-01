@@ -1,8 +1,0 @@
-Percentage of possible seqences created: 37.5%
-Average number of bits changed between sequences: 0.6
-101
-011
-001
-001
-001
-001
