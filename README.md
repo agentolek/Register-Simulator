@@ -57,9 +57,18 @@ Following them, each sequence which ran through the register will be written as 
 
 An example output file has also been included in the repo, named "test_output_file.txt."
 
+## Classes:
+
+<b>Register</b>:
+Simulates the register, is used to generate new sequences during the program's use. Consists of a list of FlipFlops.
+<b>LogicGate</b>:
+Every logic gate used in program is a member of this class. Its use is to simulate the value a real gate of given type would have, and return that value.
+<b>FlipFlop</b>:
+A simulation of a type-D flip-flop. Used to get values used in generated sequences.
+
+
 ## Authors and acknowledgment
 Created entirely by Aleksander Nowak.
-
 I would like to thank:
 - Raymund Kożuszek, for his excellent guidance and priceless advice
 - And <s>not</s> Mateusz Guliński, for his mental support through these trying times.
