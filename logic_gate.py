@@ -11,15 +11,15 @@ class LogicGate:
     :type value: bool
     """
 
-    def __init__(self, entries, type_) -> None:
+    def __init__(self, entries: list, type_: str) -> None:
         self._entries = entries
         self._type = type_
 
     @property
-    def value(self):
+    def value(self) -> bool:
         return self.AVAILABLE_TYPES.get(self._type)(self)
 
-    def and_value(self):
+    def and_value(self) -> bool:
         """
         Entries - 1 to infinity.
         Returns True if all "subvalues" of LogicGate are True,
@@ -30,7 +30,7 @@ class LogicGate:
         else:
             return False
 
-    def or_value(self):
+    def or_value(self) -> bool:
         """
         Entries - 1 to infinity.
         Returns True if at least one subvalue of LogicGate is True,
@@ -41,14 +41,14 @@ class LogicGate:
         else:
             return False
 
-    def not_value(self):
+    def not_value(self) -> bool:
         """
         Entries - only 1.
         Returns the opposite value of entry.
         """
         return not self._entries[0].value
 
-    def nand_value(self):
+    def nand_value(self) -> bool:
         """
         Entries - 1 to infinity.
         Returns False if all "subvalues" of LogicGate are True,
@@ -56,7 +56,7 @@ class LogicGate:
         """
         return not self.and_value()
 
-    def nor_value(self):
+    def nor_value(self) -> bool:
         """
         Entries - 1 to infinity.
         Returns False if at least one subvalue of LogicGate is True,

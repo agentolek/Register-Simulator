@@ -33,11 +33,11 @@ class EntryAmountError(Exception):
         )
 
 
-def read_from_json(file_handle):
+def read_from_json(file_handle) -> dict:
     return json.load(file_handle)
 
 
-def create_flip_flop(id: str, flip_flop: dict):
+def create_flip_flop(id: str, flip_flop: dict) -> FlipFlop:
     """
     Returns flip-flop without proper input,
     temporarily putting a bool in its place.
@@ -53,7 +53,7 @@ def create_flip_flop(id: str, flip_flop: dict):
     return FlipFlop(id, starting_value, starting_value)
 
 
-def check_gate(logic_gate: dict, entries: list, id: str, depth: int):
+def check_gate(logic_gate: dict, entries: list, id: str, depth: int) -> None:
     """
     Runs tests to see if a LogicGate object can be created using given data.
     """
@@ -81,10 +81,9 @@ def check_gate(logic_gate: dict, entries: list, id: str, depth: int):
 
 def create_logic_gate(
     logic_gate: dict, flip_flops: list, id: str = None, depth: int = 0
-):
+) -> LogicGate:
     """
-    Given a gate dict and list of flip-flops,
-    creates and returns a LogicGate object and list of flip-flops entering it.
+    Creates and returns a LogicGate object and list of flip-flops entering it.
     Id is given for the purpose of writing more precise error messages.
     Depth limits depth of recursion.
 
@@ -120,7 +119,7 @@ def create_logic_gate(
     return LogicGate(entries, logic_gate["type"]), set(flip_flops_entering)
 
 
-def create_register(data):
+def create_register(data: dict):
     """
     Given a properly formatted json file, this function will turn it
     into a member of the class Register.
@@ -163,7 +162,7 @@ def create_register(data):
     return Register(flip_flops)
 
 
-def parse_data(file_handle):
+def parse_data(file_handle) -> Register:
     data = read_from_json(file_handle)
 
     register = create_register(data)

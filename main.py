@@ -9,7 +9,7 @@ class StepError(Exception):
         super().__init__("Number of steps must be greater than 0!")
 
 
-def parse_terminal_input(arguments):
+def parse_terminal_input(arguments: list):
     """
     Parses flags and argments typed in terminal into usable data.
     Also checks if all of the necessary arguments are there.
@@ -39,7 +39,7 @@ def parse_terminal_input(arguments):
     return args
 
 
-def visualise_sequence(sequence, seq_number):
+def visualise_sequence(sequence: list[bool], seq_number: int):
     """
     Prints the generated sequence in terminal.
     """
@@ -48,18 +48,14 @@ def visualise_sequence(sequence, seq_number):
         return
 
     print_string = str(seq_number - 1) + ". "
-    print_string = print_string.zfill(6)
-    for elem in sequence:
-        if elem:
-            # uses an em dash which isn't in ASCII,
-            # so might not work everywhere
-            print_string += "—"
-        else:
-            print_string += "_"
-    print(print_string)
+
+    # uses an em dash which isn't in ASCII, os might not work everywhere
+    print(print_string + "".join(["—" if elem else "_" for elem in sequence]))
 
 
-def run_register(register: Register, steps: int = None, looped=False):
+def run_register(
+    register: Register, steps: int = None, looped=False
+) -> list[list[bool]]:
     """
     Runs the register, creating new sequences and returning a list of sequences
     created.
@@ -88,7 +84,9 @@ def run_register(register: Register, steps: int = None, looped=False):
     return created_sequences
 
 
-def calc_utilization_rate(created_sequences, register):
+def calc_utilization_rate(
+    created_sequences: list[list[bool]], register: Register
+) -> float:
     """
     Calculates the percentage of available sequences that were created
     using program.
@@ -96,7 +94,9 @@ def calc_utilization_rate(created_sequences, register):
     return round(len(set(created_sequences)) / (2 ** len(register)), 4)
 
 
-def calc_avg_bit_difference(created_sequences, register):
+def calc_avg_bit_difference(
+    created_sequences: list[list[bool]], register: Register
+) -> float:
     """
     Calculates the average difference between sequences created using program.
     """
@@ -115,12 +115,15 @@ def calc_avg_bit_difference(created_sequences, register):
     return round((sum(bits_differing) / len(bits_differing)), 2)
 
 
-def write_to_file(write_file_path, sequences, utilization_rate, avg_diff):
+def write_to_file(
+    write_file_path: str,
+    sequences: list[list[bool]],
+    util_rate: float,
+    avg_diff: float,
+) -> None:
     try:
         with open(write_file_path, "w") as f:
-            f.write(
-                f"Percentage of possible seqences created: {utilization_rate*100}%\n"
-            )
+            f.write(f"Percentage of possible seqences created: {util_rate*100}%\n")
             f.write(f"Average number of bits changed between sequences: {avg_diff}\n")
             for sequence in sequences:
                 write_string = "".join(["1" if value else "0" for value in sequence])
@@ -129,7 +132,7 @@ def write_to_file(write_file_path, sequences, utilization_rate, avg_diff):
         print("Couldn't write to file, something is wrong with path given!!!")
 
 
-def get_register(path):
+def get_register(path: str) -> None:
     try:
         with open(path, "r") as f:
             return parse_data(f)
@@ -137,7 +140,7 @@ def get_register(path):
         raise FileNotFoundError("Path to input json doesn't point to a file!")
 
 
-def main(arguments):
+def main(arguments: list) -> None:
     args = parse_terminal_input(arguments)
     created_sequences = []
 

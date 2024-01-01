@@ -30,7 +30,7 @@ class FlipFlop:
         """
         return self._value
 
-    def updated_value(self):
+    def updated_value(self) -> bool:
         return self._entry.value
 
     def load_value(self, value) -> None:
