@@ -23,7 +23,7 @@ Either one of the below flags must be present:
 
 ### What does the input json need to look like?
 
-An example input file has been included in the repo, named "test_input_file.json."  
+An example input file has been included in the tests folder, named "example_input_file.json."  
 The base dicts should be named after numbers from 1 to N (but don't have to), where N is the number of flip-flops. These dicts will represent your flip-flops. They will be added to the register in the order they are given.
 
 Each of these dicts <b>must</b> consist of these elements:
@@ -54,7 +54,7 @@ The program will print the first 9999 sequences created. What's more, it will cr
 Its top 2 lines will be occupied by statistics regarding your created sequences: the percentage of available unique sequences created, and the average number of bits changed between each cycle.  
 Following them, each sequence which ran through the register will be written as a series of 1's and 0's. The first sequence will be the initial values of the register!
 
-An example output file has also been included in the repo, named "test_output_file.txt."
+An example output file has also been included in the tests folder, named "example_output_file.txt."
 
 ## Classes:
 
