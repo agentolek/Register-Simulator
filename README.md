@@ -73,6 +73,8 @@ I believe that had I taken the time to write my code well in the first place, it
 
 Also, I should have been using type hints to begin with, not have added them at the end. They're pretty useful.
 
+P.S. my reasons for some of the design choices I made are in project_docs/dlaczego_tak.txt
+
 ## Authors and acknowledgment
 Created entirely by Aleksander Nowak.
 I would like to thank:
