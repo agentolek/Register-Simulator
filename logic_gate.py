@@ -4,7 +4,7 @@ class LogicGate:
     :param entries: The FlipFlops/LogicGates entering the LogicGate.
     :type entries: list[FlipFlop|LogicGate|bool]
 
-    :param type: The type of logic gatde.
+    :param type: The type of logic gate.
     :type type: str
 
     :param value: Returns the value of the LogicGate.
@@ -25,10 +25,7 @@ class LogicGate:
         Returns True if all "subvalues" of LogicGate are True,
         otherwise returns False.
         """
-        if sum(entry.value for entry in self._entries) == len(self._entries):
-            return True
-        else:
-            return False
+        return sum(entry.value for entry in self._entries) == len(self._entries)
 
     def or_value(self) -> bool:
         """
@@ -36,10 +33,7 @@ class LogicGate:
         Returns True if at least one subvalue of LogicGate is True,
         returns False only if all subvalues are False.
         """
-        if sum(entry.value for entry in self._entries) >= 1:
-            return True
-        else:
-            return False
+        return sum(entry.value for entry in self._entries) >= 1
 
     def not_value(self) -> bool:
         """

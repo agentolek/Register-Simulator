@@ -25,10 +25,12 @@ def parse_terminal_input(arguments: list):
         type=int,
         help="Specifies that the program should generate STEPS new sequences.",
     )
+    message = "Specifies that the program should generate sequences"
+    message += " until it creates an already acquired sequence."
     group.add_argument(
         "--until-loop",
         action="store_true",
-        help="Specifies that the program should generate sequences until it creates an already acquired sequence.",
+        help=message
     )
 
     args = parser.parse_args(arguments[1:])
@@ -39,18 +41,14 @@ def parse_terminal_input(arguments: list):
     return args
 
 
-def visualise_sequence(sequence: list[bool], seq_number: int):
+def visualise_sequences(sequences: list[list[bool]]):
     """
-    Prints the generated sequence in terminal.
+    Prints the generated sequences in terminal.
     """
-    # Program only visualises the first 9999 sequences created.
-    if seq_number > 10000:
-        return
-
-    print_string = str(seq_number - 1) + ". "
-
-    # uses an em dash which isn't in ASCII, os might not work everywhere
-    print(print_string + "".join(["—" if elem else "_" for elem in sequence]))
+    for index in range(len(sequences[0])):
+        write_str = f'{index+1}: '
+        write_str += "".join(["1" if seq[index] else "0" for seq in sequences])
+        print(f"{write_str}")
 
 
 def run_register(
@@ -73,11 +71,9 @@ def run_register(
 
         if (current_values in created_sequences) and looped:
             created_sequences.append(current_values)
-            visualise_sequence(current_values, len(created_sequences))
             break
 
         created_sequences.append(current_values)
-        visualise_sequence(current_values, len(created_sequences))
         register.update()
         max_counter -= 1
 
@@ -121,15 +117,12 @@ def write_to_file(
     util_rate: float,
     avg_diff: float,
 ) -> None:
-    try:
-        with open(write_file_path, "w") as f:
-            f.write(f"Percentage of possible seqences created: {util_rate*100}%\n")
-            f.write(f"Average number of bits changed between sequences: {avg_diff}\n")
-            for sequence in sequences:
-                write_string = "".join(["1" if value else "0" for value in sequence])
-                f.write(f"{write_string}\n")
-    except Exception:
-        print("Couldn't write to file, something is wrong with path given!!!")
+    with open(write_file_path, "w") as f:
+        f.write(f"Percentage of possible seqences created: {util_rate*100}%\n")
+        f.write(f"Average number of bits changed between sequences: {avg_diff}\n")
+        for index in range(len(sequences[0])):
+            write_str = "".join(["1" if seq[index] else "0" for seq in sequences])
+            f.write(f"{write_str}\n")
 
 
 def get_register(path: str) -> None:
@@ -147,6 +140,8 @@ def main(arguments: list) -> None:
     register = get_register(args.json_path)
 
     created_sequences = run_register(register, args.steps, args.until_loop)
+
+    visualise_sequences(created_sequences)
 
     util_rate = calc_utilization_rate(created_sequences, register)
     avg_diff = calc_avg_bit_difference(created_sequences, register)

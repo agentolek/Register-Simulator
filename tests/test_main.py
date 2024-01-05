@@ -47,22 +47,15 @@ def test_parse_terminal_input_negative_steps():
         main.parse_terminal_input(test_args)
 
 
-def test_visualise_sequence():
+def test_visualise_sequences():
     capturedPrint = io.StringIO()
     sys.stdout = capturedPrint
-    main.visualise_sequence([True, True, True, False], 123)
-    assert capturedPrint.getvalue() == "0122. ———_\n"
-
-
-def test_visualise_sequence_above_10000():
-    capturedPrint = io.StringIO()
-    sys.stdout = capturedPrint
-    main.visualise_sequence([True, True, True, False], 12345)
-    assert capturedPrint.getvalue() == ""
+    main.visualise_sequences([[True, False], [False, False], [True, True]])
+    assert capturedPrint.getvalue() == "1: 101\n2: 001\n"
 
 
 def test_run_register_typical():
-    register = main.get_register("tests/test_input_file.json")
+    register = main.get_register("tests/example_input_file.json")
     sequences = main.run_register(register, 3)
     assert sequences == [
         (True, False, True),
