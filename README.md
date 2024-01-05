@@ -49,10 +49,10 @@ The below elements are entries, each gate must contain at least 1:
 
 ## Output:
 
-The program will print the first 9999 sequences created. What's more, it will create a .txt file containing the results of its labor.
+The program will print the sequences created. What's more, it will create a .txt file containing the results of its work.
 
 Its top 2 lines will be occupied by statistics regarding your created sequences: the percentage of available unique sequences created, and the average number of bits changed between each cycle.  
-Following them, each sequence which ran through the register will be written as a series of 1's and 0's. The first sequence will be the initial values of the register!
+Following them, each line will contain the values which went through the flip-flops in order, so first line is first flip-flop, second line, is second flip-flop, and so on.
 
 An example output file has also been included in the tests folder, named "example_output_file.txt."
 
