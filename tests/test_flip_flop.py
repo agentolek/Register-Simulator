@@ -1,7 +1,5 @@
 from flip_flop import FlipFlop
 
-# from logic_gate import LogicGate
-
 
 def test_set_id():
     flipflop = FlipFlop("1", True, True)
@@ -29,8 +27,3 @@ def test_load_value():
     assert flipflop.value
     flipflop.load_value(False)
     assert not flipflop.value
-
-
-# def test_value_auto_update():
-#     flipflop = FlipFlop("1", False, True)
-#     assert not flipflop.updated_value()
